@@ -11,7 +11,7 @@ void system_update(string password){
     system(command.c_str());
 }
 
-void install_polybar_theme(){
+void intsall_polybar_theme(){
     system("git clone --depth=1 https://github.com/adi1090x/polybar-themes.git");
 }
 
@@ -35,26 +35,29 @@ void create_directories(){
 }
 
 void general_setup(string password){
-    system("echo \"" + password + "\" | sudo ln -s /etc/sv/elogind /var/service");
-    system("echo \"" + password + "\" | sudo sv up dbus");
-    system("echo \"" + password + "\" | sudo sv up slogind");
+    string command = "echo \"" + password + "\" | sudo ln -s /etc/sv/elogind /var/service";
+    system(command.c_str());
+    command = "echo \"" + password + "\" | sudo sv up dbus";
+    system(command.c_str());
+    command = "echo \"" + password + "\" | sudo sv up slogind";
+    system(command.c_str());
 }
 
 void reboot_system(string password){
-    system("echo \"" + password + "\" | sudo reboot");
+    string command = "echo \"" + password + "\" | sudo reboot";
+    system(command.c_str());
 }
 
 int main(){
-    cout << "Enter your system password: ";
+    cout<<"Enter your system password: ";
     string password;
-    cin >> password;
+    cin>> password;
     system_update(password);
-    install_polybar_theme();
+    intsall_polybar_theme();
     install_programs(password);
     move_config_files();
     create_directories();
     general_setup(password);
     reboot_system(password);
-
     return 0;
 }
